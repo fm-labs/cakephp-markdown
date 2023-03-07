@@ -20,7 +20,7 @@ class CommonMarkHelper extends Helper
     /**
      * @var \Markdown\Converter\MarkdownConverterInterface|null
      */
-    protected ?\Markdown\Converter\MarkdownConverterInterface $_converter;
+    protected ?\Markdown\Converter\MarkdownConverterInterface $_converter = null;
 
     public function initialize(array $config): void
     {
@@ -28,7 +28,7 @@ class CommonMarkHelper extends Helper
 
     public function getConverter(): \Markdown\Converter\MarkdownConverterInterface
     {
-        if (!$this->_converter) {
+        if ($this->_converter === null) {
             if (version_compare(PHP_VERSION, '7.4.0') >= 0) {
                 // PHP >= 7.4
                 $this->_converter = new \Markdown\Converter\CommonMark\CommonMarkConverter();
