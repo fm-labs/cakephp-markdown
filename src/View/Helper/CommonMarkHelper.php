@@ -18,15 +18,15 @@ class CommonMarkHelper extends Helper
     protected $_defaultConfig = [];
 
     /**
-     * @var \Markdown\MarkdownConverterInterface|null
+     * @var \Markdown\Converter\MarkdownConverterInterface|null
      */
-    protected ?\Markdown\MarkdownConverterInterface $_converter;
+    protected ?\Markdown\Converter\MarkdownConverterInterface $_converter;
 
     public function initialize(array $config): void
     {
     }
 
-    public function getConverter(): \Markdown\MarkdownConverterInterface
+    public function getConverter(): \Markdown\Converter\MarkdownConverterInterface
     {
         if (!$this->_converter) {
             if (version_compare(PHP_VERSION, '7.4.0') >= 0) {

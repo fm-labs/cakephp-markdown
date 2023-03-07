@@ -3,7 +3,7 @@
 namespace Markdown\Converter\CommonMark;
 
 use League\CommonMark;
-use Markdown\MarkdownConverterInterface;
+use Markdown\Converter\MarkdownConverterInterface;
 
 class CommonMarkConverter implements MarkdownConverterInterface
 {

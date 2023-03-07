@@ -13,7 +13,7 @@ use Cake\Routing\RouteBuilder;
 /**
  * Plugin for Markdown
  */
-class Plugin extends BasePlugin
+class MarkdownPlugin extends BasePlugin
 {
     /**
      * Load all the plugin configuration and bootstrap logic.

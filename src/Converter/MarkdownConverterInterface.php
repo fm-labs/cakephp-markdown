@@ -1,6 +1,6 @@
 <?php
 
-namespace Markdown;
+namespace Markdown\Converter;
 
 interface MarkdownConverterInterface
 {
