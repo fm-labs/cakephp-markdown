@@ -11,9 +11,10 @@ class CommonMarkConverter implements MarkdownConverterInterface
 
     public function __construct()
     {
-        $environment = CommonMark\Environment::createCommonMarkEnvironment();
+        $config = [];
+        $environment = new CommonMark\Environment\Environment($config);
+        $environment->addExtension(new CommonMark\Extension\CommonMark\CommonMarkCoreExtension());
         $environment->addExtension(new CommonMark\Extension\GithubFlavoredMarkdownExtension());
-        $environment->mergeConfig([]);
 
         $this->_converter = new CommonMark\MarkdownConverter($environment);
     }

@@ -18,22 +18,29 @@ class CommonMarkHelper extends Helper
     protected $_defaultConfig = [];
 
     /**
-     * @var \Markdown\MarkdownConverterInterface
+     * @var \Markdown\MarkdownConverterInterface|null
      */
-    protected $_converter;
+    protected ?\Markdown\MarkdownConverterInterface $_converter;
 
     public function initialize(array $config): void
     {
-        if (version_compare(PHP_VERSION, '7.4.0') >= 0) {
-            // PHP >= 7.4
-            $this->_converter = new \Markdown\Converter\CommonMark\CommonMarkConverter();
+    }
+
+    public function getConverter(): \Markdown\MarkdownConverterInterface
+    {
+        if (!$this->_converter) {
+            if (version_compare(PHP_VERSION, '7.4.0') >= 0) {
+                // PHP >= 7.4
+                $this->_converter = new \Markdown\Converter\CommonMark\CommonMarkConverter();
+            }
+            elseif (version_compare(PHP_VERSION, '7.2.0') >= 0) {
+                // PHP >= 7.2
+                $this->_converter = new \Markdown\Converter\CommonMark\CommonMarkConverterV1();
+            } else {
+                throw new \RuntimeException("CommonMarkHelper: Unsupported PHP Version");
+            }
         }
-        elseif (version_compare(PHP_VERSION, '7.2.0') >= 0) {
-            // PHP >= 7.2
-            $this->_converter = new \Markdown\Converter\CommonMark\CommonMarkConverterV1();
-        } else {
-            throw new \RuntimeException("CommonMarkHelper: Unsupported PHP Version");
-        }
+        return $this->_converter;
     }
 
     /**
@@ -43,6 +50,12 @@ class CommonMarkHelper extends Helper
      */
     public function convert(string $markdown): string
     {
-        return $this->_converter->convert($markdown);
+        try {
+            return $this->getConverter()->convert($markdown);
+        } catch (\Exception $ex) {
+            //@todo Handle exception
+            debug($ex->getMessage());
+        }
+        return $markdown;
     }
 }
